@@ -1,7 +1,6 @@
 import {Schema, model, connect } from "mongoose"
 
 process.loadEnvFile()
-
 const URI_DB= process.env.URI_DB || ""
 
 
@@ -28,3 +27,43 @@ const videoJuego = model("videoJuego",  videoJuegoSchema)
 
 
 
+const nuevoJuego = async () =>{
+    try {
+        
+    } catch (error) {
+        
+    }
+}
+
+const obtenerJuego = async ()=>{
+    try {
+        
+    } catch (error) {
+        
+    }
+}
+
+const obtenerJuegoId = async (id: string) =>{
+    try {
+        
+    } catch (error) {
+        
+    }
+}
+
+const actualizarJuego = async () =>{
+    try {
+        
+    } catch (error) {
+        
+    }
+}
+
+const borrarJuego = async () =>{
+    try {
+        
+    } catch (error) {
+        
+    }
+}
+connectMongo()

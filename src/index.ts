@@ -14,15 +14,17 @@ const connectMongo = async () =>{
     }
 }
 
+// El esquema es para registrar juegos con DATOS como título, consola, género, etc..
 const videoJuegoSchema = new Schema({
     titulo: {type: String, required: true, unique:true},
     genero:{type:String, required: true},
     consola:{type:String, required:true},
-    Lanzamiento: {type: Number, required:true},
+    lanzamiento: {type: Number, required:true},
+    completado:{ type: Boolean, default:false}
 })
 
+// El modelo se basa en el esquema videoJuegoSchema para interactuar con la colección de juegos en la base de datos.
 const videoJuego = model("videoJuego",  videoJuegoSchema)
 
 
 
-connectMongo()

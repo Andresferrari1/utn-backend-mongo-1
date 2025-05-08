@@ -18,7 +18,7 @@ interface VideoJuego{
     genero:string,
     consola: string,
     lanzamiento:number,
-    complatado:boolean
+    completado:boolean
 }
 
 // El esquema es para registrar juegos con DATOS como título, consola, género, etc..
@@ -27,7 +27,7 @@ const videoJuegoSchema = new Schema({
     genero:{type:String, required: true},
     consola:{type:String, required:true},
     lanzamiento: {type: Number, required:true},
-    completado:{ type: Boolean, default:false}
+    completado:{ type: Boolean, default:false }
 })
 
 // El modelo se basa en el esquema videoJuegoSchema para interactuar con la colección de juegos en la base de datos.
@@ -35,11 +35,23 @@ const VideoJuego = model("VideoJuego",  videoJuegoSchema)
 
 
 
-const nuevoJuego = async () =>{
+const nuevoJuego = async (juegoNuevo: VideoJuego) =>{
     try {
-        
-    } catch (error) {
-        
+        const {titulo,genero, consola,lanzamiento,completado} = juegoNuevo
+        if(!titulo || !genero || !consola || lanzamiento === undefined ){
+            return{success: false, error: "Juego no valido"}
+        }
+        const juegoNuevoDb = new VideoJuego({ titulo, genero, consola, lanzamiento, completado})
+        await juegoNuevoDb.save()
+        return{
+            success:true,
+            data: juegoNuevoDb,
+            message: "El juego se añadio correctamente"
+        }
+    } catch (error:any) {
+        return{
+            success: false, error: error.message
+        }
     }
 }
 
@@ -74,4 +86,18 @@ const borrarJuego = async () =>{
         
     }
 }
-connectMongo()
+
+
+const main= async () =>{
+    await connectMongo()
+
+    const juegoGuardado = await nuevoJuego({
+        titulo:"Fifa 25",
+        genero: "Deporte", 
+        consola: "PS5", 
+        lanzamiento: 2024, 
+        completado: true})
+    console.log(juegoGuardado)
+}
+
+main()

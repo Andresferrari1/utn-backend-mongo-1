@@ -88,11 +88,17 @@ const obtenerJuegoId = async (id: string) =>{
     }
 }
 
-const actualizarJuego = async () =>{
+const actualizarJuego = async (id:string, datosActualizados: Partial<VideoJuego>) =>{
     try {
-        const actualizacion = 
-    } catch (error) {
-        
+        const actualizacion = await VideoJuego.findByIdAndUpdate(id, datosActualizados, { new: true })
+        if(!actualizacion) return { success:false, message: "El juego no se actualizó"}
+        return{
+            success: true,
+            data:actualizacion,
+            message: "¡Tu juego ya está actualizado!"
+        }
+    } catch (error:any) {
+        return { success:false, error: error.message}
     }
 }
 
@@ -126,7 +132,10 @@ const main= async () =>{
         // console.log(juegoObtenido)
 
 //FUNCION LLAMADA PARA ACTUALIZAR UN JUEGO POR SU PROPIEDAD
+        // const resultadoJuego = await actualizarJuego('681d18ba38eef67bcd8b0641', { titulo: "NBA 2K24"});
+        // console.log(resultadoJuego);
 
+//FUNCION LLAMADA PARA BORRAR UN JUEGO 
 
 }
 

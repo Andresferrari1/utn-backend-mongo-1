@@ -28,6 +28,8 @@ const videoJuegoSchema = new Schema({
     consola:{type:String, required:true},
     lanzamiento: {type: Number, required:true},
     completado:{ type: Boolean, default:false }
+}, {
+    versionKey: false
 })
 
 // El modelo se basa en el esquema videoJuegoSchema para interactuar con la colección de juegos en la base de datos.
@@ -57,23 +59,38 @@ const nuevoJuego = async (juegoNuevo: VideoJuego) =>{
 
 const obtenerJuego = async ()=>{
     try {
-        
+        const juegos = await VideoJuego.find()
+        return{
+            success:true,
+            data:juegos,
+            message: "Estos son todos los juegos disponibles"
+        }
     } catch (error) {
-        
+        return{ success:false, message:"Lo siento, no se pudieron obtener los juegos"}
     }
 }
 
 const obtenerJuegoId = async (id: string) =>{
     try {
-        
-    } catch (error) {
-        
+        const juegoId = await VideoJuego.findById(id)
+        if(!juegoId){
+            return{ success:false, message: "No se puedo obtener el juego asignado"}
+        }
+        return {
+            success: true,
+            data:juegoId,
+            message: "Juego obtenido correctamente"
+        }
+    } catch (error: any) {
+        return{
+            success:false, error: error.message
+        }
     }
 }
 
 const actualizarJuego = async () =>{
     try {
-        
+        const actualizacion = 
     } catch (error) {
         
     }
@@ -91,13 +108,26 @@ const borrarJuego = async () =>{
 const main= async () =>{
     await connectMongo()
 
-    const juegoGuardado = await nuevoJuego({
-        titulo:"Fifa 25",
-        genero: "Deporte", 
-        consola: "PS5", 
-        lanzamiento: 2024, 
-        completado: true})
-    console.log(juegoGuardado)
+//FUNCION LLAMADA PARA GUARDAR UN JUEGO
+        // const juegoGuardado = await nuevoJuego({
+        //     titulo:"Fifa 25",
+        //     genero: "Deporte", 
+        //     consola: "PS5", 
+        //     lanzamiento: 2024, 
+        //     completado: true})
+        // console.log(juegoGuardado)
+
+//FUNCION LLAMADA PARA OBTENER TODOS LOS JUEGOS
+        // const listaJuegos = await obtenerJuego()
+        // console.log(listaJuegos)
+
+//FUNCION LLAMADA PARA OBTENER UN SOLO JUEGO CON EL ID
+        // const juegoObtenido = await obtenerJuegoId("681d18ba38eef67bcd8b0641")
+        // console.log(juegoObtenido)
+
+//FUNCION LLAMADA PARA ACTUALIZAR UN JUEGO POR SU PROPIEDAD
+
+
 }
 
 main()

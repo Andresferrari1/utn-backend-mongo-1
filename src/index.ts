@@ -36,7 +36,7 @@ const videoJuegoSchema = new Schema({
 const VideoJuego = model("VideoJuego",  videoJuegoSchema)
 
 
-
+// 1.   Crear un nuevo documento en la base de datos.
 const nuevoJuego = async (juegoNuevo: VideoJuego) =>{
     try {
         const {titulo,genero, consola,lanzamiento,completado} = juegoNuevo
@@ -57,6 +57,7 @@ const nuevoJuego = async (juegoNuevo: VideoJuego) =>{
     }
 }
 
+// 2.   Obtener todos los documentos de la colección.
 const obtenerJuego = async ()=>{
     try {
         const juegos = await VideoJuego.find()
@@ -70,6 +71,7 @@ const obtenerJuego = async ()=>{
     }
 }
 
+// 3.   Obtener un documento por su ID.
 const obtenerJuegoId = async (id: string) =>{
     try {
         const juegoId = await VideoJuego.findById(id)
@@ -88,6 +90,7 @@ const obtenerJuegoId = async (id: string) =>{
     }
 }
 
+// 4.    Actualizar un documento existente.
 const actualizarJuego = async (id:string, datosActualizados: Partial<VideoJuego>) =>{
     try {
         const actualizacion = await VideoJuego.findByIdAndUpdate(id, datosActualizados, { new: true })
@@ -102,11 +105,19 @@ const actualizarJuego = async (id:string, datosActualizados: Partial<VideoJuego>
     }
 }
 
-const borrarJuego = async () =>{
+// 5.    Eliminar un documento por su ID.
+const borrarJuego = async (id:string) =>{
     try {
-        
-    } catch (error) {
-        
+        const juegoBorrado = await VideoJuego.findByIdAndDelete(id)
+        if(!juegoBorrado){
+            return {success:false, message:"El juego no fue eliminado"}
+        } return{
+            succes: true,
+            data:juegoBorrado,
+            message: "El juego elegido fue eliminado correctamente"
+        }
+    } catch (error: any) {
+        return{success:false, error: error.message}
     }
 }
 
@@ -136,7 +147,8 @@ const main= async () =>{
         // console.log(resultadoJuego);
 
 //FUNCION LLAMADA PARA BORRAR UN JUEGO 
-
+        // const borrado = await borrarJuego("681d18b64abe2710cc8f1e1b")
+        // console.log(borrado)
 }
 
 main()

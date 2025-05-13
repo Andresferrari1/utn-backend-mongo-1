@@ -18,7 +18,7 @@ interface VideoJuego{
     genero:string,
     consola: string,
     lanzamiento:number,
-    completado:boolean
+    completado?:boolean
 }
 
 // El esquema es para registrar juegos con DATOS como título, consola, género, etc..
@@ -112,7 +112,7 @@ const borrarJuego = async (id:string) =>{
         if(!juegoBorrado){
             return {success:false, message:"El juego no fue eliminado"}
         } return{
-            succes: true,
+            success: true,
             data:juegoBorrado,
             message: "El juego elegido fue eliminado correctamente"
         }
